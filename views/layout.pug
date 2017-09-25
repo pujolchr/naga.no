@@ -1,0 +1,34 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='stylesheets/bulma.css')
+  body
+    nav.navbar.is-dark(role="navigation" aria-label="main navigation")
+      .navbar-brand
+        a.navbar-item(href='/') naga.no
+        button.button.navbar-burger
+          .navbar-item
+            a(href='/naga') about naga  
+          .navbar-item
+            a(href='/about') about Me  
+          .navbar-item
+            a(href='/contact') Contact  
+          .navbar-item
+            a(href='/portfolio') portfolio   
+      .navbar-menu
+        .navbar-item
+          a(href='/naga') about naga  
+        .navbar-item
+          a(href='/about') about Me  
+        .navbar-item
+          a(href='/contact') Contact  
+        .navbar-item
+          a(href='/portfolio') portfolio   
+
+    block content
+
+    footer.footer.is-dark
+      p
+      | built by me with, ember pug etc
+    

@@ -1,0 +1,21 @@
+jody {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+.rounded {
+    border-radius: 100%;
+}
+
+.tiers {
+    float: left;
+    width: 33.33333333%:
+}
+.row {
+    display: flex;
+    justify-content: space-around;
+    width:100%;
+}
