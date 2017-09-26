@@ -1,10 +1,14 @@
 extends layout
 
 block content
-  section.hero.is-primary.my-rounded
-      .container
-        h1.title   naga.no
-        img(class='rounded' src='/images/nagada.jpg')
+  section.hero
+      .container.media.my-roundedi.is-light
+        figure.media-left
+          img(class='rounded' src='/images/nagada.jpg')
+        .media-content
+          .content
+            h1.title   naga.no
+            p something nice
   .columns
     .column.notification.is-primary.my-rounded.media
       h2.media-left  About naga
