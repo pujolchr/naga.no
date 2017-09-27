@@ -2,7 +2,7 @@
 const fetch = require('node-fetch');
 
 const apiUrl = 'api.github.com/users/pujolchr/repos';
-const tok = 'e104bc35784bd30d54d41e8eabe8818c8d88fb86';
+const tok = '';
 const repository = [];
 const getRepos = url => fetch(url) // check for error?
   .then(data => data.json())
