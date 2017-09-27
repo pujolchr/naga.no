@@ -1,15 +1,19 @@
-#! /usr/bin/env nodejs
-const fetch = require('node-fetch');
+#! /usr/bin/env node
 
-const apiUrl = 'api.github.com/users/pujolchr/repos';
-const tok = '';
+const fetch = require('node-fetch');
+const {
+  APIurl,
+  tok,
+  user,
+  owner,
+} = require('./config/config.js');
+
 const repository = [];
 const getRepos = url => fetch(url) // check for error?
   .then(data => data.json())
   .then((data) => {
     if (data.message) {
-      console.log(data);
-      return;
+      return Promise.reject(data);
     }
     data.forEach((elmt) => {
       const repo = {};
@@ -21,10 +25,11 @@ const getRepos = url => fetch(url) // check for error?
       if (elmt.forks_count) repo.forks_count = elmt.forks_count;
       repository.push(repo);
     });
+    return repository;
   })
   .then(() => Promise.all(repository.map((r) => {
     const repo = r;
-    const rUrl = `https://pujolchr:${tok}@api.github.com/repos/pujolchr/${repo.name}`;
+    const rUrl = `https://${user}:${tok}@${APIurl}/repos/${owner}/${repo.name}`;
     return fetch(rUrl)
       .then(repoData => repoData.json())
       .then((repoData) => {
@@ -34,7 +39,7 @@ const getRepos = url => fetch(url) // check for error?
   })))
   .then(() => Promise.all(repository.map((r) => {
     const repo = r;
-    const rUrl = `https://pujolchr:${tok}@api.github.com/repos/pujolchr/${repo.name}/languages`;
+    const rUrl = `https://${user}:${tok}@${APIurl}/repos/${owner}/${repo.name}/languages`;
     return fetch(rUrl)
       .then(lang => lang.json())
       .then((languages) => {
@@ -43,6 +48,10 @@ const getRepos = url => fetch(url) // check for error?
   })))
   .then(() => repository);
 
-
-getRepos(`https://pujolchr:${tok}@${apiUrl}`).then(r => console.log(JSON.stringify(r)));
-module.exports = getRepos;
+if (require.main === module) {
+  getRepos(`https://${user}:${tok}@${APIurl}/users/${owner}/repos`)
+    .then(r => console.log(r)) // eslint-disable-line no-console
+    .catch(data => console.log(data)); // eslint-disable-line no-console
+} else {
+  module.exports = getRepos;
+}
