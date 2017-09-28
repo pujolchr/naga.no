@@ -22,7 +22,7 @@ const getRepos = url => fetch(url) // check for error?
       repo.html_url = elmt.html_url;
       repo.url = elmt.url;
 
-      if (elmt.forks_count) repo.forks_count = elmt.forks_count;
+      if (elmt.forks) repo.forks = elmt.forks;
       repository.push(repo);
     });
     return repository;
@@ -50,7 +50,7 @@ const getRepos = url => fetch(url) // check for error?
 
 if (require.main === module) {
   getRepos(`https://${user}:${tok}@${APIurl}/users/${owner}/repos`)
-    .then(r => console.log(r)) // eslint-disable-line no-console
+    .then(r => console.log(JSON.stringify(r))) // eslint-disable-line no-console
     .catch(data => console.log(data)); // eslint-disable-line no-console
 } else {
   module.exports = getRepos;
