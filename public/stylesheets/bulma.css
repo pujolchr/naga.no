@@ -20,10 +20,6 @@
   }
 }
 
-/* my stuff */
-.my-rounded {
-    border-radius:100%;
-}
 /*! minireset.css v0.0.2 | MIT License | github.com/jgthms/minireset.css */
 html,
 body,
@@ -10136,3 +10132,19 @@ label.panel-block:hover {
   padding: 3rem 1.5rem 6rem;
 }
 /*# sourceMappingURL=bulma.css.map */
+
+/* my stuff */
+.my-rounded {
+    border-radius:100%;
+}
+.is-fixed {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  }
+.is-under {
+    top: 3.25rem;
+}
+

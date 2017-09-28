@@ -5,7 +5,7 @@ html
     link(rel='stylesheet', href='stylesheets/bulma.css')
     meta(name="viewport" content="width=device-width, initial-scale=1")
   body
-    nav.navbar.is-dark(role="navigation" aria-label="main navigation")
+    nav.navbar.is-dark.is-fixed(role="navigation" aria-label="main navigation")
       .navbar-brand
         a.navbar-item(href='/') naga.no
         button.button.navbar-burger
@@ -27,6 +27,7 @@ html
         .navbar-item
           a(href='/portfolio') portfolio   
 
+    div(style="height: 6rem")
     block content
 
     footer.footer.is-dark

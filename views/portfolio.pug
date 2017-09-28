@@ -1,45 +1,65 @@
 extends layout
 
 block content
-  h1 PORTFOLIO
 
+  nav.navbar.is-light.is-fixed.is-under(role="navigation" aria-label="main navigation")
+   .navbar-brand
+     h2 Portfolio
+   .navbar-menu
+     .navbar-item
+       a.menu-label(href='#about') about
+     .navbar-item
+       a.menu-label.is-active(href='#repos') repos
+     .navbar-item
+       a.menu-label(href='#contact') contact
   .columns
     aside.column.is-2.menu
-      p
-        a.menu-label(href='#about') about
-      p
-        a.menu-label.is-active(href='#repos') repos
-      each repo in repos
-        ul.menu-list
-          li
-            a(href='#' + repo.name) #{repo.name}
-      p
-        a.menu-label(href='#contact') contact
     section.column.is-9.section
-      .section.hero.is-fullheight.is-primary#about
+      .section.hero.is-large.is-primary
          p.title  about
-      .section#repos
+      div#repos(style="height: 6rem")
+      .section
           each repo in repos
+            br
             .container.is-fluid(id = repo.name )
               article.media.notification.is-light.my-rounded
                 figure.media-left
-                  img.rounded(src='' alt='found one')
+                  img.rounded(src='' alt='Not found')
                 div.media-content
                   div.content
                      h2 #{repo.name}
                      p #{repo.description}
                      .level
-                       a(href=repo.home) live
                        a(href=repo.html_url) code is on GitHub
+                       if  repo.homepage
+                         a(href=repo.homepage) live
                   .level
                     .tags
-                      span.tag.is-primary language1
-                      span.tag.is-info language2
-                      span.tag.is-success language3
-                    if repo.forks
+                      each lang in repo.languages
+                        span.tag.is-primary #{lang}
+                    if repo.forks_counts
                       .tags.has-addons
                         span.tag.is-warning forks:
                         span.tag.is-primary #{repo.forks}
-      .section#contact
+      div#contact(style="height: 6rem")
+      .section
         include contact-form
     .column.is-1
+
+  script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js")
+  script.
+    $(document).ready(function(){
+    // Smooth scroll
+      $('a[href*="#"]:not([href="#"])').click(function() {
+        if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') &&
+          location.hostname == this.hostname) {
+            var target = $(this.hash);
+            if (target.length) {
+              $('html, body').animate({
+                scrollTop: target.offset().top
+              }, 1000);
+                return false;
+              }
+            }
+          });
+        });
