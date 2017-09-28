@@ -1,19 +1,37 @@
+const fs = require('fs');
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
 
-// routes 
+// routes
 const index = require('./routes/index');
 const naga = require('./routes/naga');
 const about = require('./routes/about');
 const portfolio = require('./routes/portfolio');
 const contact = require('./routes/contact');
 const users = require('./routes/users');
+const cfg = require('./config/config.js');
+
+
+// get repo json
+const getRepo = require('./get-repos');
 
 const app = express();
+
+// get repo json
+const refresh = setInterval(() => {
+  getRepo.getRepo(getRepo.user)
+    .then((data) => {
+      console.log(data);
+      console.log('try to save data');
+      fs.writeFile(path.join(__dirname, 'datai', `${cfg.user}.json`), data, (err) => {
+        if (err) throw err;
+        console.log(`The file '${cfg.user}.json' has been saved!`);
+      });
+    })
+    .catch(data => console.log(data));
+}, cfg.refreshInterval);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,9 +40,6 @@ app.set('view engine', 'pug');
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public/images', 'nagada.jpg')));
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);

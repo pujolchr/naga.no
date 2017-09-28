@@ -8,8 +8,11 @@ const {
   owner,
 } = require('./config/config.js');
 
+
 const repository = [];
-const getRepos = url => fetch(url) // check for error?
+const myUser = `https://${user}:${tok}@${APIurl}/users/${owner}/repos`;
+
+const getRepo = url => fetch(url) // check for error?
   .then(data => data.json())
   .then((data) => {
     if (data.message) {
@@ -49,9 +52,11 @@ const getRepos = url => fetch(url) // check for error?
   .then(() => repository);
 
 if (require.main === module) {
-  getRepos(`https://${user}:${tok}@${APIurl}/users/${owner}/repos`)
+  getRepo(`https://${user}:${tok}@${APIurl}/users/${owner}/repos`)
     .then(r => console.log(r)) // eslint-disable-line no-console
     .catch(data => console.log(data)); // eslint-disable-line no-console
 } else {
-  module.exports = getRepos;
-}
+  module.exports = {
+    getRepo : getRepo, 
+    user: myUser,
+};}
