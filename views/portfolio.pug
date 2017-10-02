@@ -33,9 +33,8 @@ block content
                        a(href=repo.html_url) code is on GitHub
                   .level
                     .tags
-                      span.tag.is-primary language1
-                      span.tag.is-info language2
-                      span.tag.is-success language3
+                      each lang in repo.languages
+                        span.tag.is-primary #{lang}
                     if repo.forks
                       .tags.has-addons
                         span.tag.is-warning forks:
