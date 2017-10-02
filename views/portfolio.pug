@@ -37,7 +37,7 @@ block content
                     .tags
                       each lang in repo.languages
                         span.tag.is-primary #{lang}
-                    if repo.forks_counts
+                    if repo.forks
                       .tags.has-addons
                         span.tag.is-warning forks:
                         span.tag.is-primary #{repo.forks}

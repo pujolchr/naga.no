@@ -2,38 +2,38 @@ const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
+const webshot = require('webshot');
 
-// routes 
+const cfg = require('./config/config.json');
+
+// routes
 const index = require('./routes/index');
 const naga = require('./routes/naga');
 const about = require('./routes/about');
 const portfolio = require('./routes/portfolio');
 const contact = require('./routes/contact');
-const users = require('./routes/users');
+const api = require('./routes/api');
 
 const app = express();
+
+setInterval(() => api.fetchrepo(cfg.owner), cfg.refreshInterval);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-// uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public/images', 'nagada.jpg')));
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.use('/', index);
 app.use('/naga', naga);
 app.use('/about', about);
 app.use('/portfolio', portfolio);
 app.use('/contact', contact);
+app.use('/api', api.router);
 
-app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
